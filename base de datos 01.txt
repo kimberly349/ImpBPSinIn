@@ -1,0 +1,287 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15343600
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables;
++----------------------------------+
+| Tables_in_Basededatos709$default |
++----------------------------------+
+| GameScores                       |
+| HockeyGame                       |
+| HockeyTeam                       |
+| HockeyTeamPlayer                 |
+| RoundStats                       |
+| User                             |
+| UserInfo                         |
+| UserScorePicks                   |
+| UserStatsPicks                   |
+| detalle_horario                  |
+| horario                          |
+| plantilla_detalle_horario        |
+| playoffround                     |
+| usuarios                         |
++----------------------------------+
+14 rows in set (0.01 sec)
+
+mysql> desc GameScores;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| id         | int  | NO   | PRI | NULL    |       |
+| team1Score | int  | NO   |     | NULL    |       |
+| team2Score | int  | NO   |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> INSERT INTO GameScores (id,team1Score,team2Score)
+    -> values (10,15,12);
+ERROR 1062 (23000): Duplicate entry '10' for key 'GameScores.PRIMARY'
+mysql> INSERT INTO GameScores (id,team1Score,team2Score)
+    -> values (19,15,12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc HockeyGame;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int          | NO   | PRI | NULL    |       |
+| roundId     | int          | NO   |     | NULL    |       |
+| startTime   | timestamp    | NO   | PRI | NULL    |       |
+| endTime     | date         | NO   |     | NULL    |       |
+| description | varchar(255) | YES  |     | NULL    |       |
+| team1Id     | int          | NO   |     | NULL    |       |
+| team2Id     | int          | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO HockeyGame (id,roundId,startTime,endTime,description,team1Id,team2Id)
+    -> values (20,15,'2025/08/22 18:30','2025/09/17 19:17','rojo_8',3,4);
+Query OK, 1 row affected, 3 warnings (0.01 sec)
+
+mysql> desc HockeyTeam;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int          | NO   | PRI | NULL    |       |
+| name  | varchar(100) | NO   |     | NULL    |       |
+| logo  | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> INSERT INTO HockeyTeam (id,name,logo)
+    -> values (8,'teamJanna','logoc.png');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc HockeyTeamPlayer;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | NO   | PRI | NULL    |       |
+| hockeyTeamId | int         | NO   |     | NULL    |       |
+| firstName    | varchar(25) | NO   |     | NULL    |       |
+| lastName     | varchar(25) | NO   |     | NULL    |       |
+| jerseyNum    | int         | YES  |     | NULL    |       |
+| position     | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO HockeyTeamPlayer (id,hockeyteamId,firstName,lastName,jerseyNum,position)
+    -> values (22,12,'Juan','William',99,14);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc RoundStats;
++---------------------+------+------+-----+---------+-------+
+| Field               | Type | Null | Key | Default | Extra |
++---------------------+------+------+-----+---------+-------+
+| id                  | int  | NO   | PRI | NULL    |       |
+| numShutouts         | int  | YES  |     | NULL    |       |
+| goalLeaderId        | int  | YES  |     | NULL    |       |
+| assistLeaderId      | int  | YES  |     | NULL    |       |
+| penaltyLeaderId     | int  | YES  |     | NULL    |       |
+| plusMinusLeaderId   | int  | YES  |     | NULL    |       |
+| faceoffsWonLeaderId | int  | YES  |     | NULL    |       |
+| sogLeaderId         | int  | YES  |     | NULL    |       |
++---------------------+------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO  RoundStats (id, numShutouts, goalLeaderId, assistLeaderId, penaltyLeaderId,plusMinusLeaderId,faceoffsWonLeaderId, sogLeaderId)
+    -> values (18, 8, 24, 11, 16, 5, 14, 22);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc User;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | NO   | PRI | NULL    |       |
+| username | varchar(50) | NO   |     | NULL    |       |
+| password | varchar(50) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> 
+mysql> INSERT INTO User (id,username,password)
+    -> values (6, 'jgraham', 'password2006');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc UserInfo;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | NO   | PRI | NULL    |       |
+| firstName    | varchar(25) | NO   |     | NULL    |       |
+| lastName     | varchar(25) | NO   |     | NULL    |       |
+| email        | varchar(25) | NO   |     | NULL    |       |
+| round1Points | int         | YES  |     | NULL    |       |
+| round2Points | int         | YES  |     | NULL    |       |
+| round3Points | int         | YES  |     | NULL    |       |
+| round4Points | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO userInfo (id, firstName, lastName, email, round1Points, round2Points, round3Points, round4Points)
+    -> values (5, 'Jacob Slavin', 'William portador', 'William.portador@example.com', 20, 26, 32, 38);
+ERROR 1146 (42S02): Table 'Basededatos709$default.userInfo' doesn't exist
+mysql> desc UserScorePicks;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| id           | int  | NO   | PRI | NULL    |       |
+| hockeyGameId | int  | NO   |     | NULL    |       |
+| team1Score   | int  | NO   |     | NULL    |       |
+| team2Score   | int  | NO   |     | NULL    |       |
+| userId       | int  | NO   |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO  UserScorePicks (id, hockeyGameId, team1Score, team2Score, userId)
+    -> values (12,4,3,1,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc UserScorePicks;
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| id           | int  | NO   | PRI | NULL    |       |
+| hockeyGameId | int  | NO   |     | NULL    |       |
+| team1Score   | int  | NO   |     | NULL    |       |
+| team2Score   | int  | NO   |     | NULL    |       |
+| userId       | int  | NO   |     | NULL    |       |
++--------------+------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO  UserScorePicks (id, hockeyGameId, team1Score, team2Score, userId)
+    -> values (10,9,3,1,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc UserStatsPicks;
+UserStatsPicks;
+^C
+mysql> desc UserStatsPicks;
++---------------------+------+------+-----+---------+-------+
+| Field               | Type | Null | Key | Default | Extra |
++---------------------+------+------+-----+---------+-------+
+| id                  | int  | NO   | PRI | NULL    |       |
+| roundId             | int  | NO   |     | NULL    |       |
+| goalLeaderId        | int  | YES  |     | NULL    |       |
+| assistLeaderId      | int  | YES  |     | NULL    |       |
+| penaltyLeaderId     | int  | YES  |     | NULL    |       |
+| plusMinusLeaderId   | int  | YES  |     | NULL    |       |
+| faceoffsWonLeaderId | int  | YES  |     | NULL    |       |
+| sogLeaderId         | int  | YES  |     | NULL    |       |
+| numShutouts         | int  | YES  |     | NULL    |       |
+| userId              | int  | NO   |     | NULL    |       |
++---------------------+------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> INSERT INTO UserStatsPicks (id, roundId, goalLeaderId, assistLeaderId,penaltyLeaderId,  plusMinusLeaderId, faceoffsWonLeaderId, sogLeaderId, numShutouts, userId)
+    -> values (12, 6, 16, 12, 17, 6, 12, 25, 5, 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc detalle_horario;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| horario_id         | int         | NO   | PRI | NULL    |       |
+| hora_salida        | date        | NO   | PRI | NULL    |       |
+| hora_entrada       | date        | NO   |     | NULL    |       |
+| codigo_incapacidad | varchar(25) | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO detalle_horario (horario_id,hora_salida,hora_entrada,codigo_incapacidad)
+    -> values (28,'2024/04/22','2024/04/13','vacaciones');
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> desc horario;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| horario_id   | int  | NO   | PRI | NULL    | auto_increment |
+| plantilla_id | int  | YES  |     | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+
+mysql> INSERT INTO horario (horario_id,plantilla_id)
+    -> values (15,18);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc                     |
+    -> 
+    -> desc plantilla_detalle_horario;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '|
+
+desc plantilla_detalle_horario' at line 1
+mysql> desc plantilla_detalle_horario;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| plantilla_id       | int         | NO   | PRI | NULL    |       |
+| team1Score | int  | NO   |     | NULL    |       |
+| dia                | int         | NO   | PRI | NULL    |       |
+| codigo_incapacidad | varchar(25) | YES  |     | NULL    |       |
+| turno              | varchar(25) | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> INSERT INTO plantilla_detalle_horario (plantilla_id, dia, codigo_incapacidad, turno)
+    -> values (12,'2025/03/05',10,59);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+mysql> desc playoffround;
++-----------+----------+------+-----+---------+-------+
+| Field     | Type     | Null | Key | Default | Extra |
++-----------+----------+------+-----+---------+-------+
+| id        | int      | NO   | PRI | NULL    |       |
+| team1id   | int      | NO   |     | NULL    |       |
+| team2id   | int      | NO   |     | NULL    |       |
+| startTime | datetime | NO   | PRI | NULL    |       |
+| endTime   | datetime | YES  |     | NULL    |       |
+| roundNum  | int      | NO   |     | NULL    |       |
++-----------+----------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+mysql> INSERT INTO playoffround (id,team1id,team2id,startTime, endTime,roundNum)
+    -> values (6,1,22,'2025/02/15 13:00:00','2025/02/15 15:00:00',3 );
+Query OK, 1 row affected, 2 warnings (0.01 sec)
+mysql> desc usuarios;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| idx          | int          | NO   |     | NULL    |       |
+| nombre       | varchar(100) | NO   | PRI | NULL    |       |
+| apellidos    | varchar(100) | NO   | PRI | NULL    |       |
+| departamento | varchar(100) | NO   |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> INSERT INTO usuarios (idx,nombre,apellidos,departamento)
+    -> values (22,67,88,33);
+Query OK, 1 row affected (0.00 sec)
+mysql> 
