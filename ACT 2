@@ -1,0 +1,80 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 24611517
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE `Desarrollo` (
+    -> `Desarrollo` VARCHAR (20),
+    -> `Etapa` INT,
+    -> `Finalizado` DATE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO `Desarrollo` (`Desarrollo` , `Etapa` , `Finalizado`) VALUES 
+    -> (RestAPI, 1 , '2024-03-12'),
+    -> (RestAPI, 2 , '2024-04-22'),
+    -> (RestAPI, 3 , '2024-05-18'),
+    -> ('Web' , 1, '2024-11-28'),
+    -> ('Web' , 2, '2024-05-24'),
+    -> ('Web' , 3, NULL),
+    -> ('App' , 1, '2024-01-30'),
+    -> ('App' , 2, NULL);
+ERROR 1054 (42S22): Unknown column 'RestAPI' in 'field list'
+mysql> INSERT INTO `Desarrollo` (`Desarrollo` , `Etapa` , `Finalizado`) VALUES 
+    -> ('RestAPI', 1 , '2024-03-12'),
+    -> ('RestAPI', 2 , '2024-04-22'),
+    -> ('RestAPI', 3 , '2024-05-18'),
+    -> ('Web' , 1, '2024-11-28'),
+    -> ('Web' , 2, '2024-05-24'),
+    -> ('Web' , 3, NULL),
+    -> ('App' , 1, '2024-01-30'),
+    -> ('App' , 2, NULL);
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+mysql> SELECT DISTINCT 'Desarrollo'
+    -> FROM 'Desarrollo'
+    -> WHERE 'Finalizado' IS NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Desarrol
+lo'
+WHERE 'Finalizado' IS NULL' at line 2
+mysql> SELECT * FROM Desarrollo;
++------------+-------+------------+
+| Desarrollo | Etapa | Finalizado |
++------------+-------+------------+
+| RestAPI    |     1 | 2024-03-12 |
+| RestAPI    |     2 | 2024-04-22 |
+| RestAPI    |     3 | 2024-05-18 |
+| Web        |     1 | 2024-11-28 |
+| Web        |     2 | 2024-05-24 |
+| Web        |     3 | NULL       |
+| App        |     1 | 2024-01-30 |
+| App        |     2 | NULL       |
++------------+-------+------------+
+8 rows in set (0.00 sec)
+mysql> SELECT DISTINCT 'Desarrollo'
+    -> FROM Desarrollo
+    -> WHERE Finalizado IS NULL;
++------------+
+| Desarrollo |
++------------+
+| Desarrollo |
++------------+
+1 row in set (0.01 sec)
+mysql> SELECT DISTINCT 'Desarrollo';
++------------+
+| Desarrollo |
++------------+
+| Desarrollo |
++------------+
+1 row in set (0.00 sec)
+mysql> 
