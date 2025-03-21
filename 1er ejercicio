@@ -1,0 +1,104 @@
+eading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 24586216
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE `Customer ID` (
+    ->     `Customer ID` INT NOT NULL,
+    ->     `Type Phone` VARCHAR(20),
+    ->     `Number` VARCHAR(20)
+    -> );
+ERROR 1050 (42S01): Table 'Customer ID' already exists
+mysql> INSERT INTO `Customer ID`(`Customer ID`,`Type Phone`,`Number`) VALUES
+    -> (1, 'Celular', '33-1543-8712'),
+    -> (1, 'Trabajo', '33-5812-2345'),
+    -> (1, 'Casa', '33-1287-4391'),
+    -> (2, 'Celular', '33-0967-4467'),
+    -> (2, 'Trabajo', '33-2134-5643'),
+    -> (3, 'Celular', '33-5413-8076');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> CREATE TABLE `Tabla_Transformada` (
+    ->     `Customer ID` INT NOT NULL,
+    ->     `Celular` VARCHAR(20),
+    ->     `Trabajo` VARCHAR(20),
+    ->     `Casa` VARCHAR(20),
+    ->     PRIMARY KEY (`Customer ID`)
+    -> );
+ERROR 1050 (42S01): Table 'Tabla_Transformada' already exists
+mysql> INSERT INTO `Tabla_Transformada` (`Customer ID` , `Celular` , `Trabajo` , `Casa`)VALUES
+    -> ( 1, '33-3476-1934', '33-4657-2197', '33-1903-2487'),
+    -> ( 2, '33-1295-2340', '33-3496-1038'),
+    -> ( 3, '33-4508-1056');
+ERROR 1136 (21S01): Column count doesn't match value count at row 2
+mysql> INSERT INTO `Tabla_Transformada` (`Customer ID` , `Celular` , `Trabajo` , `Casa`)VALUES
+    -> ( 1, '33-3476-1934', '33-4657-2197', '33-1903-2487'),
+    -> ( 2, '33-1295-2340', '33-3496-1038', '33-4376-2119'),
+    -> ( 3, '33-4508-1056', '33-1745-2399', '33-5467-2098');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Customer ID;
+ERROR 1146 (42S02): Table 'Basededatos709$default.Customer' doesn't exist
+mysql> SELECT * FROM Tabla_Transformada;
++-------------+--------------+--------------+--------------+
+| Customer ID | Celular      | Trabajo      | Casa         |
++-------------+--------------+--------------+--------------+
+|           1 | 33-3476-1934 | 33-4657-2197 | 33-1903-2487 |
+|           2 | 33-1295-2340 | 33-3496-1038 | 33-4376-2119 |
+|           3 | 33-4508-1056 | 33-1745-2399 | 33-5467-2098 |
++-------------+--------------+--------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE `Table_Customer_ID` (
+    -> ( 2, '33-1295-2340', '33-3496-1038'),
+    ->     `Customer ID` INT NOT NULL,
+    ->     `Type Phone` VARCHAR(20),
+    ->     `Number` VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+mysql> INSERT INTO `Table_Customer_ID`(`Customer ID`,`Type Phone`,`Number`) VALUES
+    -> (1, 'Celular', '33-1543-8712'),
+    -> (1, 'Trabajo', '33-5812-2345'),
+    -> (1, 'Casa', '33-1287-4391'),
+    -> (2, 'Celular', '33-0967-4467'),
+    -> (2, 'Trabajo', '33-2134-5643'),
+    -> (3, 'Celular', '33-5413-8076');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Table_Customer_ID;
++-------------+------------+--------------+
+| Customer ID | Type Phone | Number       |
++-------------+------------+--------------+
+|           1 | Celular    | 33-1543-8712 |
+|           1 | Trabajo    | 33-5812-2345 |
+|           1 | Casa       | 33-1287-4391 |
+|           2 | Celular    | 33-0967-4467 |
+|           2 | Trabajo    | 33-2134-5643 |
+|           3 | Celular    | 33-5413-8076 |
++-------------+------------+--------------+
+6 rows in set (0.00 sec)
+mysql> SELECT * FROM Tabla_transformada;
+ERROR 1146 (42S02): Table 'Basededatos709$default.Tabla_transformada' doesn't exist
+mysql> SELECT * FROM Tabla_Transformada;
++-------------+--------------+--------------+--------------+
+| Customer ID | Celular      | Trabajo      | Casa         |
++-------------+--------------+--------------+--------------+
+|           1 | 33-3476-1934 | 33-4657-2197 | 33-1903-2487 |
+|           2 | 33-1295-2340 | 33-3496-1038 | 33-4376-2119 |
+|           3 | 33-4508-1056 | 33-1745-2399 | 33-5467-2098 |
++-------------+--------------+--------------+--------------+
+3 rows in set (0.00 sec)
+mysql> 
