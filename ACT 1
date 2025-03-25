@@ -1,0 +1,62 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 26784206
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE Casos_de_prueba (
+    -> Caso VARCHAR (50) NOT NULL
+    -> PRIMARY KEY
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> INSERT INTO Casos_de_prueba (Caso) VALUES 
+    -> (‘A’),
+    -> (‘B’),
+    -> (‘C’);
+ERROR 1054 (42S22): Unknown column '‘A’' in 'field list'
+mysql> INSERT INTO Casos_de_prueba (Caso) VALUES 
+    -> (‘A’),
+    -> (‘B’),
+    -> (‘C’);
+ERROR 1054 (42S22): Unknown column '‘A’' in 'field list'
+mysql> selec * from Casos_de_prueba;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syn
+tax to use near 'selec * from Casos_de_prueba' at line 1
+mysql> select * from Casos_de_prueba;
+Empty set (0.00 sec)
+mysql> drop table Casos_de_prueba;
+Query OK, 0 rows affected (0.02 sec)
+mysql> CREATE TABLE Casos_de_prueba (
+    -> Caso VARCHAR (50) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> INSERT INTO Casos_de_prueba (Caso) VALUES 
+    -> (‘A’),
+    -> (‘B’),
+    -> (‘C’);
+ERROR 1054 (42S22): Unknown column '‘A’' in 'field list'
+mysql> INSERT INTO Casos_de_prueba (Caso) VALUES 
+    -> ('A'),
+    -> ('B'),
+    -> ('C');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Casos_de_prueba;
++------+
+| Caso |
++------+
+| A    |
+| B    |
+| C    |
++------+
+3 rows in set (0.00 sec)
+mysql> 
