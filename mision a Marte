@@ -1,0 +1,126 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27345565
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE Requisitos (
+    -> Descripcion VARCHAR (50) NOT NULL
+    -> );
+Query OK, 0 rows affected (1.19 sec)
+
+mysql> INSERT INTO Requisitos (Descripcion) VALUES 
+    -> (‘Geologo’),
+    -> (‘Astronomo’),
+    -> (‘Tecnico’); 
+ERROR 1054 (42S22): Unknown column '‘Geologo’' in 'field list'
+mysql> INSERT INTO Requisitos (Descripcion) VALUES 
+    -> ('Geologo'),
+    -> ('Astronomo'),
+    -> ('Tecnico'); 
+Query OK, 3 rows affected (0.16 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE Candidatos (
+    -> Id_candidatos VARCHAR (50) NOT NULL,
+    -> Descripcion VARCHAR (100) NOT NULL
+    -> ); 
+Query OK, 0 rows affected (0.47 sec)
+
+mysql> INSERT INTO Candidatos (Id_candidatos,Descripcion) VALUES 
+    -> ('1001','Geologo'),
+    -> ('1001','Astronomo'),
+    -> ('1001','Bioquimico'),
+    -> ('1001','Tecnico'),
+    -> ('2002','Cirujano'),
+    -> ('2002','MecanicO'),
+    -> ('2002','Geologo'),
+    -> ('3003','Geologo'),
+    -> ('3003','Astronomo'),
+    -> ('4004','Ingeniero');
+Query OK, 10 rows affected (0.29 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> INSERT * FROM Candidatos;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM Candidatos' at line 1
+mysql> SELECT * FROM Candidatos;
++---------------+-------------+
+| Id_candidatos | Descripcion |
++---------------+-------------+
+| 1001          | Geologo     |
+| 1001          | Astronomo   |
+| 1001          | Bioquimico  |
+| 1001          | Tecnico     |
+| 2002          | Cirujano    |
+| 2002          | MecanicO    |
+| 2002          | Geologo     |
+| 3003          | Geologo     |
+| 3003          | Astronomo   |
+| 4004          | Ingeniero   |
++---------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Requisitos;
++-------------+
+| Descripcion |
++-------------+
+| Geologo     |
+| Astronomo   |
+| Tecnico     |
++-------------+
+3 rows in set (0.03 sec)
+
+mysql> SELECT * FROM Id_candidato;
+ERROR 1146 (42S02): Table 'Basededatos709$default.Id_candidato' doesn't exist
+mysql> CREATE TABLE candidato (
+    -> Id_candidatos  VARCHAR (50) NOT NULL
+    -> );
+Query OK, 0 rows affected (1.10 sec)
+
+mysql> INSERT INTO candidatos (Id candidatos) VALUES
+mysql> INSERT INTO Requisitos (Descripcion) VALUES 
+    -> ('1001');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'candidato
+s) VALUES
+('1001')' at line 1
+mysql> 
+mysql> INSERT INTO candidatos (Id_candidatos) VALUES
+    -> ('1001');
+ERROR 1146 (42S02): Table 'Basededatos709$default.candidatos' doesn't exist
+mysql> SELECT *FROM Id_candidato;
+ERROR 1146 (42S02): Table 'Basededatos709$default.Id_candidato' doesn't exist
+mysql> INSERT INTO candidato (Id_candidatos) VALUES
+    -> (‘1001’);
+ERROR 1054 (42S22): Unknown column '‘1001’' in 'field list'
+mysql> DROP TABLE Id_candidato;
+ERROR 1051 (42S02): Unknown table 'Basededatos709$default.Id_candidato'
+mysql> CREATE TABLE candidato (
+    -> Id_candidato  VARCHAR (50) NOT NULL
+    -> );
+ERROR 1050 (42S01): Table 'candidato' already exists
+mysql> DROP TABLE candidato;
+Query OK, 0 rows affected (0.74 sec)
+mysql> CREATE TABLE candidato (
+    -> Id_candidato  VARCHAR (50) NOT NULL
+    -> );
+Query OK, 0 rows affected (1.19 sec)
+mysql> INSERT INTO candidato (Id_candidato) VALUES
+    -> ('1001');
+Query OK, 1 row affected (0.18 sec)
+mysql> SELECT * FROM candidato;
++--------------+
+| Id_candidato |
++--------------+
+| 1001         |
++--------------+
+1 row in set (0.03 sec)
+mysql> 
