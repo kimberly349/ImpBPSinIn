@@ -1,0 +1,97 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 777758
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE Promedio_de_dias (
+    -> Desarrollo VARCHAR (100),
+    -> Terminación DATE 
+    -> );
+ERROR 1050 (42S01): Table 'Promedio_de_dias' already exists
+mysql> DROP TABLE Promedio_de_dias;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Promedio_de_dias (
+    -> Desarrollo VARCHAR (100),
+    -> Terminación DATE 
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Promedio_de_dias (Desarrollo, Terminación) VALUES
+    -> ('RestAPI',STR_TO_DATE ('06/01/2024','%d/%m/%y')),
+    -> ('RestAPI',STR_TO_DATE ('06/14/2024','%d/%m/%y')),
+    -> ('RestAPI',STR_TO_DATE ('06/15/2024','%d/%m/%y')),
+    -> ('Web',STR_TO_DATE ('09/01/2024','%d/%m/%y')),
+    -> ('Web',STR_TO_DATE ('06/01/2024','%d/%m/%y')),
+    -> ('Web',STR_TO_DATE ('06/02/2024','%d/%m/%y')),
+    -> ('App',STR_TO_DATE ('14/01/2024','%d/%m/%y')),
+    -> ('App',STR_TO_DATE ('06/15/2024','%d/%m/%y')),
+    -> ('App',STR_TO_DATE ('15/30/2024','%d/%m/%y'));
+Query OK, 9 rows affected, 9 warnings (0.00 sec)
+Records: 9  Duplicates: 0  Warnings: 9
+
+mysql> SELECT * FROM Promedio_de_dias;
++------------+--------------+
+| Desarrollo | Terminación  |
++------------+--------------+
+| RestAPI    | 2020-01-06   |
+| RestAPI    | NULL         |
+| RestAPI    | NULL         |
+| Web        | 2020-01-09   |
+| Web        | 2020-01-06   |
+| Web        | 2020-02-06   |
+| App        | 2020-01-14   |
+| App        | NULL         |
+| App        | NULL         |
++------------+--------------+
+9 rows in set (0.00 sec)
+    -> ('Web',STR_TO_DATE ('06/01/2024','%d/%m/%y')),
+mysql> CREATE TABLE Resultado (
+    -> Desarrollo VARCHAR (50),
+    ->  Promedio VARCHAR (20)
+    -> );
+ERROR 1050 (42S01): Table 'Resultado' already exists
+mysql> DROP TABLE Resultado;
+Query OK, 0 rows affected (0.01 sec)
+mysql> CREATE TABLE Resultado (
+    -> Desarrollo VARCHAR (50),
+    ->  Promedio VARCHAR (20)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+mysql> INSERT INTO Resultado (Desarrollo,  Promedio) VALUES 
+    -> ('RestAPI',7),
+    -> ('Web',9),
+    -> ('App' 14);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '14)' at l
+ine 4
+mysql> INSERT INTO Resultado (Desarrollo,  Promedio) VALUES 
+    -> ('RestAPI','7'),
+    -> ('Web','9'),
+    -> ('App' '14');
+ERROR 1136 (21S01): Column count doesn't match value count at row 3
+mysql> INSERT INTO Resultado (Desarrollo,  Promedio) VALUES 
+    -> ('RestAPI','7'),
+    -> ('Web','9'),
+    -> ('App','14');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Resultado;
++------------+----------+
+| Desarrollo | Promedio |
++------------+----------+
+| RestAPI    | 7        |
+| Web        | 9        |
+| App        | 14       |
++------------+----------+
+3 rows in set (0.00 sec)
+mysql> 
