@@ -1,0 +1,97 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13438278
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE asientos (
+    ->     num_asiento INT
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO asientos (num_asiento) VALUES
+    ->     (7), (13), (14), (15), (27), (28), (29), (30), 
+    ->     (31), (32), (33), (34), (35), (52), (53), (54);
+Query OK, 16 rows affected (0.03 sec)
+Records: 16  Duplicates: 0  Warnings: 0
+
+mysql> WITH RECURSIVE numeros AS (
+    ->     SELECT 1 AS num
+    ->     UNION ALL
+    ->     SELECT num + 1
+    ->     FROM numeros
+    ->     WHERE num + 1 <= 54
+    -> ),
+    -> disponibles AS (
+    ->     SELECT num
+    ->     FROM numeros
+    ->     WHERE num NOT IN (SELECT num_asiento FROM asientos)
+    -> ),
+    -> agrupados AS (
+    ->     SELECT 
+    ->         num,
+    ->         num - ROW_NUMBER() OVER (ORDER BY num) AS grupo
+    ->     FROM disponibles
+    -> )
+    -> SELECT
+    ->     MIN(num) AS espacio_inicio,
+    ->     MAX(num) AS espacio_final
+    -> FROM agrupados
+    -> GROUP BY grupo;
++----------------+---------------+
+| espacio_inicio | espacio_final |
++----------------+---------------+
+|              1 |             6 |
+|              8 |            12 |
+|             16 |            26 |
+|             36 |            51 |
+    ->     FROM disponibles
++----------------+---------------+
+4 rows in set (0.00 sec)
+mysql> SELECT 
+    ->     COUNT(*) AS disponibles
+    -> FROM (
+    ->     SELECT 1 + units.i + tens.i * 10 AS num
+    ->     FROM
+    ->         (SELECT 0 i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+    ->          UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) units,
+    ->         (SELECT 0 i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) tens
+    ->     WHERE 1 + units.i + tens.i * 10 <= 54
+    -> ) AS numeros
+    -> WHERE num NOT IN (SELECT num_asiento FROM asientos);
++-------------+
+| disponibles |
++-------------+
+|          37 |
++-------------+
+1 row in set (0.00 sec)
+mysql> SELECT 
+    ->     CASE WHEN num % 2 = 0 THEN 'pares' ELSE 'impares' END AS tipo,
+    ->     COUNT(*) AS total
+    -> FROM (
+    ->     SELECT 1 + units.i + tens.i * 10 AS num
+    ->     FROM
+    ->         (SELECT 0 i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+    ->          UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) units,
+    ->         (SELECT 0 i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) tens
+    ->     WHERE 1 + units.i + tens.i * 10 <= 54
+    -> ) AS numeros
+    -> WHERE num NOT IN (SELECT num_asiento FROM asientos)
+    -> GROUP BY tipo;
++---------+-------+
+| tipo    | total |
++---------+-------+
+| impares |    17 |
+| pares   |    20 |
++---------+-------+
+2 rows in set (0.00 sec)
+msql>
