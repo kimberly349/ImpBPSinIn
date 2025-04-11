@@ -1,0 +1,72 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13442115
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE Periodos (
+    ->     Id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     Inicio DATE NOT NULL,
+    ->     Final DATE NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Periodos (Inicio, Final) VALUES
+    -> ('2025-01-01', '2025-01-05'),
+    -> ('2025-01-03', '2025-01-09'),
+    -> ('2025-01-10', '2025-01-11'),
+    -> ('2025-01-12', '2025-01-16'),
+    -> ('2025-01-15', '2025-01-19');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELEC * FROM Periodos;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELEC * FROM Periodos' at line 1
+mysql> SELECT * FROM Periodos;
++----+------------+------------+
+| Id | Inicio     | Final      |
++----+------------+------------+
+|  1 | 2025-01-01 | 2025-01-05 |
+|  2 | 2025-01-03 | 2025-01-09 |
+|  3 | 2025-01-10 | 2025-01-11 |
+|  4 | 2025-01-12 | 2025-01-16 |
+|  5 | 2025-01-15 | 2025-01-19 |
++----+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> WITH CTE AS (
+    ->     SELECT Inicio, Final
+    ->     FROM Periodos
+    ->     UNION ALL
+    ->     SELECT 
+    ->         LEAST(t1.Inicio, t2.Inicio) AS Inicio,
+    ->         GREATEST(t1.Final, t2.Final) AS Final
+    ->     FROM Periodos t1
+    ->     JOIN Periodos t2 ON t1.Final >= t2.Inicio AND t1.Inicio <= t2.Final
+    ->     WHERE t1.Id < t2.Id
+    -> )
+    -> SELECT MIN(Inicio) AS Inicio, MAX(Final) AS Final
+    -> FROM CTE
+    -> GROUP BY Inicio
+    -> ORDER BY Inicio;
++------------+------------+
+| Inicio     | Final      |
++------------+------------+
+|  3 | 2025-01-10 | 2025-01-11 |
+| 2025-01-01 | 2025-01-09 |
+| 2025-01-03 | 2025-01-09 |
+| 2025-01-10 | 2025-01-11 |
+| 2025-01-12 | 2025-01-19 |
+| 2025-01-15 | 2025-01-19 |
++------------+------------+
+5 rows in set, 1 warning (0.00 sec)
+mysql> 
