@@ -1,0 +1,52 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12780002
+Server version: 8.0.40 Source distribution
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+mysql> CREATE TABLE PermutacionesLibre (
+    ->     Elemento CHAR(1)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> INSERT INTO PermutacionesLibre (Elemento)
+    -> VALUES
+    -> ('A'),
+    -> ('B'),
+    -> ('C');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> SELECT 
+    ->     CONCAT(T1.Elemento, ',', T2.Elemento, ',', T3.Elemento) AS Permutacion
+    -> FROM 
+    ->     PermutacionesLibre T1
+    -> JOIN 
+    ->     PermutacionesLibre T2 ON T1.Elemento <> T2.Elemento
+    -> JOIN 
+    ->     PermutacionesLibre T3 ON T1.Elemento <> T3.Elemento AND T2.Elemento <> T3.Elemento
+    -> ORDER BY 
+    ->     Permutacion;
++-------------+
+| Permutacion |
++-------------+
+| A,B,C       |
+| A,C,B       |
+| B,A,C       |
+| B,C,A       |
+| C,A,B       |
+| C,B,A       |
++-------------+
+6 rows in set (0.01 sec)
+mysql> SELECT * FROM PermutacionesLibre;
++----------+
+| Elemento |
++----------+
+| A        |
+| B        |
+| C        |
++----------+
+3 rows in set (0.00 sec)
+mysql> 
