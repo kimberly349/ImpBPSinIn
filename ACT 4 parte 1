@@ -1,0 +1,51 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12785889
+Server version: 8.0.40 Source distribution
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+mysql> CREATE TABLE Flujos (
+    ->     Flujo VARCHAR(50),
+    ->     Caso_1 INT,
+    ->     Caso_2 INT,
+    ->     Caso_3 INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> INSERT INTO Flujos (Flujo, Caso_1, Caso_2, Caso_3)
+    -> VALUES 
+    -> ('Alta de usuario', 0, 0, 0),
+    -> ('Baja de usuario', 0, 1, 1),
+    -> ('Nueva Orden', 1, 0, 0),
+    -> ('Elimina Orden', 0, 0, 0);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+mysql> SELECT 
+    ->     Flujo, 
+    ->     (Caso_1 + Caso_2 + Caso_3) AS Aprovado
+    -> FROM 
+    ->     Flujos;
++-----------------+----------+
+| Flujo           | Aprovado |
++-----------------+----------+
+| Alta de usuario |        0 |
+| Baja de usuario |        2 |
+| Nueva Orden     |        1 |
+| Elimina Orden   |        0 |
++-----------------+----------+
+4 rows in set (0.00 sec)
+mysql> SELECT * FROM  Flujos;
++-----------------+--------+--------+--------+
+| Flujo           | Caso_1 | Caso_2 | Caso_3 |
++-----------------+--------+--------+--------+
+4 rows in set (0.00 sec)
+| Alta de usuario |      0 |      0 |      0 |
+| Baja de usuario |      0 |      1 |      1 |
+| Nueva Orden     |      1 |      0 |      0 |
+| Elimina Orden   |      0 |      0 |      0 |
++-----------------+--------+--------+--------+
+4 rows in set (0.00 sec)
+mysql> 
