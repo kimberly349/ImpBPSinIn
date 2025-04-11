@@ -1,0 +1,92 @@
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+mysql> CREATE TABLE Licencias (
+    ->     Id_empleado INT,
+    ->     Licencia VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> INSERT INTO Licencias (Id_empleado, Licencia)
+    -> VALUES 
+    -> (1001, 'Tipo A'),
+    -> (1001, 'Tipo B'),
+    -> (1001, 'Tipo C'),
+    -> (2002, 'Tipo A'),
+    -> (2002, 'Tipo B'),
+    -> (2002, 'Tipo C'),
+    -> (3003, 'Tipo A'),
+    -> (3003, 'Tipo D'),
+    -> (4004, 'Tipo A'),
+    -> (4004, 'Tipo B'),
+    -> (4004, 'Tipo D'),
+    -> (5005, 'Tipo A'),
+    -> (5005, 'Tipo B'),
+    -> (5005, 'Tipo D');
+Query OK, 14 rows affected (0.00 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM Licencias;
++-------------+----------+
+| Id_empleado | Licencia |
++-------------+----------+
+|        1001 | Tipo A   |
+|        1001 | Tipo B   |
+|        1001 | Tipo C   |
+|        2002 | Tipo A   |
+|        2002 | Tipo B   |
+|        2002 | Tipo C   |
+|        3003 | Tipo A   |
+|        3003 | Tipo D   |
+|        4004 | Tipo A   |
+|        4004 | Tipo B   |
+|        4004 | Tipo D   |
+|        5005 | Tipo A   |
+|        5005 | Tipo B   |
+|        5005 | Tipo D   |
++-------------+----------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT 
+    ->     t1.Id_empleado AS Empleado_1,
+    ->     t2.Id_empleado AS Empleado_2,
+    ->     COUNT(t1.Licencia) AS Coincidencias
+    -> FROM 
+    ->     Licencias t1
+    -> JOIN 
+    ->     Licencias t2 
+    -> ON 
+    ->     t1.Licencia = t2.Licencia AND t1.Id_empleado <> t2.Id_empleado
+    -> GROUP BY 
+    ->     t1.Id_empleado, t2.Id_empleado
+    -> HAVING 
+    ->     COUNT(t1.Licencia) > 0
+    -> ORDER BY 
+    ->     Empleado_1, Empleado_2;
++------------+------------+---------------+
+| Empleado_1 | Empleado_2 | Coincidencias |
++------------+------------+---------------+
+|       1001 |       2002 |             3 |
+|       1001 |       3003 |             1 |
+|       1001 |       4004 |             2 |
+|       1001 |       5005 |             2 |
+|       2002 |       1001 |             3 |
+|       2002 |       3003 |             1 |
+|       2002 |       4004 |             2 |
+|       2002 |       5005 |             2 |
+|       3003 |       1001 |             1 |
+|       3003 |       2002 |             1 |
+|       3003 |       4004 |             2 |
+|       3003 |       5005 |             2 |
+|       4004 |       1001 |             2 |
+|       4004 |       2002 |             2 |
+|       4004 |       3003 |             2 |
+|       4004 |       5005 |             3 |
+|       5005 |       1001 |             2 |
+|       5005 |       2002 |             2 |
+|       5005 |       3003 |             2 |
+|       5005 |       4004 |             3 |
++------------+------------+---------------+
+20 rows in set (0.00 sec)
+mysql> 
