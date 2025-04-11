@@ -1,0 +1,43 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12790847
+Server version: 8.0.40 Source distribution
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+mysql> CREATE TABLE Numeros (
+    ->     Entero INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> 
+mysql> INSERT INTO Numeros (Entero)
+    -> VALUES 
+    -> (5), (6), (10), (10), (13), (14), (17), (20), (81), (90), (76);
+Query OK, 11 rows affected (0.00 sec)
+Records: 11  Duplicates: 0  Warnings: 0
+mysql> SELECT AVG(Entero) AS Media
+    -> FROM Numeros;
++---------+
+| Media   |
++---------+
+| 31.0909 |
++---------+
+1 row in set (0.00 sec)
+mysql> WITH Ordenados AS (
+    ->     SELECT Entero, ROW_NUMBER() OVER (ORDER BY Entero) AS Posicion
+    ->     FROM Numeros
+    -> ),
+    -> Conteo AS (
+    ->     SELECT COUNT(*) AS Total FROM Numeros
+    -> )
+    -> SELECT 
+    ->     AVG(Entero) AS Mediana
+    -> FROM 
+    ->     Ordenados, Conteo
+    -> WHERE 
+    ->     Posicion IN ((Total + 1) / 2, (Total + 2) / 2); 
++---------+
+| Mediana
