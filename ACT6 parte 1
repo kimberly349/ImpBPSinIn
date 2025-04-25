@@ -1,0 +1,77 @@
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 28572784
+Server version: 8.0.40 Source distribution
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE Productos (
+    -> Producto VARCHAR (20),
+    -> Cantidad INT 
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Productos (Producto,Cantidad)
+    -> VALUES
+    -> ('Lapiz',3),
+    -> ('Borrador',3),
+    -> ('Cuaderno',3);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT * FROM Productos;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM Productos' at line 1
+mysql> WITH Numeros AS (
+    ->   SELECT 1 AS Numero UNION ALL 
+    -> SELECT 2 UNION ALL
+    ->   SELECT 3 UNION ALL
+    -> SELECT 4 UNION ALL
+    ->   SELECT 5
+    ->   )
+    -> 
+    -> WITH Numeros AS (
+    ->   SELECT 1 AS Numero UNION ALL 
+    -> SELECT 2 UNION ALL
+    ->   SELECT 3 UNION ALL
+    -> SELECT 4 UNION ALL
+    ->   SELECT 5
+    ->   );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WITH Numeros AS (
+  SELECT 1 AS Numero UNION ALL 
+SELECT 2 UNION ALL
+  SELECT 3 ' at line 9
+mysql> WITH Numeros AS (
+    ->   SELECT 1 AS Numero UNION ALL 
+    -> SELECT 2 UNION ALL
+    ->   SELECT 3 UNION ALL
+    -> SELECT 4 UNION ALL
+    ->   SELECT 5
+    ->   )
+    ->   )
+    -> 
+    -> SELECT p.Producto, 1 AS Cantidad
+    -> FROM Productos p
+    -> JOIN Numeros n ON n.Numero <= p.Cantidad;
++----------+----------+
+| Producto | Cantidad |
++----------+----------+
+| Cuaderno |        1 |
+| Borrador |        1 |
+| Lapiz    |        1 |
+| Cuaderno |        1 |
+| Borrador |        1 |
+| Lapiz    |        1 |
+| Cuaderno |        1 |
+| Borrador |        1 |
+| Lapiz    |        1 |
++----------+----------+
+9 rows in set (0.00 sec)
+mysql>
